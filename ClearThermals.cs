@@ -24,15 +24,20 @@ namespace ClearThermals
 
                 if (player != null && player.CurrentPlayerWeapon != null)
                 {
-                    WeaponSystemInfo weapon = player.CurrentPlayerWeapon;
-                    FireControlSystem FCS = weapon.FCS;
+                    FireControlSystem FCS = player.CurrentPlayerWeapon.FCS;
+                    GHPC.Camera.CameraSlot optic;
+
                     if (FCS.MainOptic != null)
                     {
-                        GHPC.Camera.CameraSlot optic = FCS.MainOptic.slot.LinkedNightSight;
-                        if (optic && optic.VisionType == GHPC.Optics.NightVisionType.Thermal)
-                        {
-                            optic.BaseBlur = 0;
-                        }
+                        optic = FCS.MainOptic.slot.LinkedNightSight;
+                    }
+                    else {
+                        optic = FCS.gameObject.GetComponent<GHPC.Camera.CameraSlot>().LinkedNightSight;
+                    }
+
+                    if (optic && optic.VisionType == GHPC.Optics.NightVisionType.Thermal)
+                    {
+                        optic.BaseBlur = 0;           
                     }
                 }
             }
