@@ -19,27 +19,34 @@ namespace ClearThermals
         }
 
         public override void OnUpdate() {
-            if (mission != null) {
-                PlayerInput player = mission.GetComponent<PlayerInput>();
+            if (mission == null) 
+                return;
 
-                if (player != null && player.CurrentPlayerWeapon != null)
-                {
-                    FireControlSystem FCS = player.CurrentPlayerWeapon.FCS;
-                    GHPC.Camera.CameraSlot optic;
+            if (mission.GetComponent<PlayerInput>() == null) 
+                return;
 
-                    if (FCS.MainOptic != null)
-                    {
-                        optic = FCS.MainOptic.slot.LinkedNightSight;
-                    }
-                    else {
-                        optic = FCS.gameObject.GetComponent<GHPC.Camera.CameraSlot>().LinkedNightSight;
-                    }
+            if (mission.GetComponent<PlayerInput>().CurrentPlayerWeapon == null)
+                return;
 
-                    if (optic && optic.VisionType == GHPC.Optics.NightVisionType.Thermal)
-                    {
-                        optic.BaseBlur = 0;           
-                    }
-                }
+            PlayerInput player = mission.GetComponent<PlayerInput>();
+            FireControlSystem FCS = player.CurrentPlayerWeapon.FCS;
+            GHPC.Camera.CameraSlot optic = null;
+
+            if (FCS == null)
+                return;
+
+            try
+            {
+                optic = FCS.MainOptic.slot.LinkedNightSight;
+            }
+            catch {
+                if (FCS.gameObject.transform.childCount > 0) 
+                    optic = FCS.GetComponentInChildren<GHPC.Camera.CameraSlot>().LinkedNightSight;
+            }
+
+            if (optic != null && optic.VisionType == GHPC.Optics.NightVisionType.Thermal)
+            {
+                optic.BaseBlur = 0;           
             }
         }
     }
