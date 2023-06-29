@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using MelonLoader;
 using ClearThermals;
 
-[assembly: MelonInfo(typeof(ClearThermalsMod), "Clear Thermals", "1.0.1", "ATLAS")]
+[assembly: MelonInfo(typeof(ClearThermalsMod), "Clear Thermals", "1.0.2", "ATLAS")]
 [assembly: MelonGame("Radian Simulations LLC", "GHPC")]
 
 // General Information about an assembly is controlled through the following

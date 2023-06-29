@@ -32,19 +32,12 @@ namespace ClearThermals
             FireControlSystem FCS = player.CurrentPlayerWeapon.FCS;
             GHPC.Camera.CameraSlot optic = null;
 
-            if (FCS == null)
+            if (FCS == null || FCS.MainOptic == null)
                 return;
 
-            try
-            {
-                optic = FCS.MainOptic.slot.LinkedNightSight;
-            }
-            catch {
-                if (FCS.gameObject.transform.childCount > 0) 
-                    optic = FCS.GetComponentInChildren<GHPC.Camera.CameraSlot>().LinkedNightSight;
-            }
-
-            if (optic != null && optic.VisionType == GHPC.Optics.NightVisionType.Thermal)
+            optic = FCS.MainOptic.slot;
+            
+            if (optic != null && optic.VisionType == GHPC.Equipment.Optics.NightVisionType.Thermal)
             {
                 optic.BaseBlur = 0;           
             }
